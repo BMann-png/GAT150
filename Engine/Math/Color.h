@@ -22,6 +22,11 @@ namespace pbls
 		Color operator * (float s) const { return { r * s, g * s, b * s }; }
 		operator std::uint32_t() const { return ToRGB(); }
 
+		float operator [] (size_t index) const { return (&r)[index]; }
+		float& operator [] (size_t index) { return (&r)[index]; }
+
+		friend std::ostream& operator << (std::ostream& stream, Color& c);
+
 		operator SDL_Color() const
 		{
 			SDL_Color color;

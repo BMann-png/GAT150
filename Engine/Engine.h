@@ -1,5 +1,8 @@
 #pragma once
 
+#define REGISTER_CLASS(class) pbls::ObjectFactory::Instance().Register<class>(#class);
+
+
 //systems
 #include "Audio/AudioSystem.h"
 
@@ -7,6 +10,13 @@
 #include "Core/Utilities.h"
 #include "Core/FileSystem.h"
 #include "Core/Timer.h"
+#include "Core/Json.h"
+#include "Core/Serializable.h"
+
+//Framework
+#include "Framework/EventSystem.h"
+#include "Framework/Singleton.h"
+#include "Framework/Factory.h"
 
 //math
 #include "Math/Vector2.h"
@@ -21,9 +31,8 @@
 #include "Graphics/ParticleSystem.h"
 #include "Graphics/Font.h"
 
-
-//Framework
-#include "Framework/EventSystem.h"
+//physics system
+#include "Physics/PhysicsSystem.h"
 
 //Input
 #include "Input/InputSystem.h"
@@ -37,8 +46,10 @@
 #include "Object/Scene.h"
 
 //Components
-#include "Component/SpriteComponent.h"
-#include "Component/PhysicsComponent.h"
+#include "Component/SpriteAnimationComponent.h"
+#include "Component/RBPhysicsComponent.h"
+#include "Component/AudioComponent.h"
+#include "Component/TextComponent.h"
 
 
 #include <vector>
@@ -47,6 +58,8 @@
 
 namespace pbls
 {
+	using ObjectFactory = Singleton<Factory<std::string, Object>>;
+
 	class Engine
 	{
 	public:

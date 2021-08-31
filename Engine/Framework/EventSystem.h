@@ -8,10 +8,13 @@
 
 namespace pbls
 {
+	class Object;
+
 	struct Event
 	{
 		std::string name;
-		std::variant<int, bool, float, std::string> data;
+		Object* receiver{ nullptr };
+		std::variant<int, bool, float, std::string, void*> data;
 	};
 
 	class EventSystem : public System
@@ -23,13 +26,15 @@ namespace pbls
 		virtual void Shutdown() override;
 		virtual void Update(float dt) override;
 
-		void Subscribe(const std::string& name, function_t function);
+		void Subscribe(const std::string& name, function_t function, Object* receiver = nullptr);
+		void Unsubscribe(const std::string& name, Object* receiver);
 		void Notify(const Event& event);
 
 	private:
 		struct Observer
 		{
 			function_t function;
+			Object* receiver;
 		};
 		
 	private:

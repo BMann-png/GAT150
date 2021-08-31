@@ -29,6 +29,12 @@ namespace pbls
 		return stream;
 	}
 
+	std::ostream& operator<<(std::ostream& stream, Color& c)
+	{
+		stream << c.r << " " << c.g << " " << c.b;
+		return stream;
+	}
+
 	const Color Color::white{ 1, 1, 1 };
 	const Color Color::red{ 1, 0, 0 };
 	const Color Color::green{ 0, 1, 0 };

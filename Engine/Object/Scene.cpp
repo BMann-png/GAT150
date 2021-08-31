@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "Actor.h"
+#include "Engine.h"
 #include <algorithm>
 
 namespace pbls
@@ -10,32 +10,7 @@ namespace pbls
 		actors.insert(actors.end(), std::make_move_iterator(newActors.begin()), std::make_move_iterator(newActors.end()));
 		newActors.clear();
 
-		//update actors
-		//this uses a lambda function
 		std::for_each(actors.begin(), actors.end(), [dt](auto& actor) { actor->Update(dt); });
-		//as opposed to the normal for each loop
-		//for (auto& actor : actors)
-		//{
-		//	actor->Update(dt);
-		//}
-
-		//collision
-		for (size_t i = 0; i < actors.size(); i++)
-		{
-			for (size_t j = i + 1; j < actors.size(); j++)
-			{
-				if (actors[i]->destroy || actors[j]->destroy) continue;
-				pbls::Vector2 dir = actors[i]->transform.position - actors[j]->transform.position;
-				float distance = dir.Length();
-				if (distance < actors[i]->GetRadius() + actors[j]->GetRadius())
-				{
-					actors[i]->OnCollision(actors[j].get());
-					actors[j]->OnCollision(actors[i].get());
-				}
-			}
-		}
-
-
 
 		//destroy
 		auto iter = actors.begin();
@@ -74,6 +49,55 @@ namespace pbls
 	void Scene::RemoveAllActors()
 	{
 		actors.clear();
+	}
+
+	Actor* Scene::FindActor(const std::string& name)
+	{
+		for (auto& actor : actors)
+		{
+			if (actor->name == name) return actor.get();
+		}
+
+		return nullptr;
+	}
+
+	bool Scene::Write(const rapidjson::Value& value) const
+	{
+		return false;
+	}
+
+	bool Scene::Read(const rapidjson::Value& value)
+	{
+		if (value.HasMember("actors") && value["actors"].IsArray())
+		{
+			for (auto& actorValue : value["actors"].GetArray())
+			{
+				std::string type;
+				JSON_READ(actorValue, type);
+
+				bool prototype = false;
+				JSON_READ(actorValue, prototype);
+
+				auto actor = ObjectFactory::Instance().Create<Actor>(type);
+				if (actor)
+				{
+					actor->scene = this;
+					actor->Read(actorValue);
+
+					if (prototype)
+					{
+						std::string name = actor->name;
+						ObjectFactory::Instance().RegisterPrototype<Actor>(name, std::move(actor));
+					}
+					else
+					{
+						AddActor(std::move(actor));
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 }
