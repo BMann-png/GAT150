@@ -128,6 +128,9 @@
     <ClCompile Include="Physics\ContactListener.cpp">
       <Filter>Source\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Tilemap.cpp">
+      <Filter>Source\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\EventSystem.h">
@@ -247,9 +250,18 @@
     <ClInclude Include="Physics\ContactListener.h">
       <Filter>Source\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Tilemap.h">
+      <Filter>Source\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Build\Resources\scene.txt">
+      <Filter>Resources</Filter>
+    </Text>
+    <Text Include="..\Build\Resources\map.txt">
+      <Filter>Resources</Filter>
+    </Text>
+    <Text Include="..\Build\Resources\title.txt">
       <Filter>Resources</Filter>
     </Text>
   </ItemGroup>

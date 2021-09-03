@@ -1,0 +1,68 @@
+{
+	"actors":[
+		 {
+         "type":"Actor",
+         "name":"Background",
+         "tag":"",
+         "transform":{
+            "position":[
+               400,
+               300
+            ]
+         },
+         "components":[
+            {
+                "type":"SpriteComponent",
+                "textureName":"background.png"
+            }      
+          ]
+        },
+        {
+         "type":"Actor",
+         "name":"Title",
+         "transform":{
+            "position":[
+               400,
+               300
+            ]
+         },
+         "components":[
+            {
+               "type":"TextComponent",
+               "fontName":"fonts/Axel Gilby Comic Sans.ttf",
+               "fontSize":16,
+               "color":[
+                  0,
+                  0,
+                  0
+               ],
+               "text":"Press Space to Start!"
+            }
+         ]
+      },
+      {
+         "type":"Actor",
+         "name":"Score",
+         "transform":{
+            "position":[
+               100,
+               50
+            ]
+         },
+         "components":[
+            {
+               "type":"TextComponent",
+               "fontName":"fonts/Axel Gilby Comic Sans.ttf",
+               "fontSize":16,
+               "color":[
+                  1,
+                  1,
+                  1
+               ],
+               "text":"Lich Mein arssch"
+            }
+         ]
+      }
+      
+	]
+}

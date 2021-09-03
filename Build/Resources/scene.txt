@@ -4,6 +4,7 @@
          "type":"Actor",
          "name":"Player",
          "tag":"Player",
+         "prototype":true,
          "transform":{
             "position":[
                400,
@@ -18,7 +19,10 @@
          "components":[
             {
                "type":"PlayerComponent",
-               "speed":100
+               "speed":50,
+               "jump":1300,
+               "fireRate":0.2,
+               "health":3
             },
             {
                "type":"AudioComponent",
@@ -59,11 +63,11 @@
                "type":"RBPhysicsComponent",
                "data.isDynamic":true,
                "data.density":1,
-               "data.restitution":0.1,
+               "data.restitution":0,
                "data.gravityScale":2,
                "data.lockAngle":true,
                "data.size":[
-                  32,
+                  22,
                   32
                ]
             }
@@ -75,16 +79,15 @@
          "name":"Enemy",
          "tag":"Enemy",
          "transform":{
-            "position":[
-               500,
-               200
-            ],
-            "rotation":0
+            "scale":[
+               1.2,
+               1.2
+            ]
          },
          "components":[
             {
                "type":"EnemyComponent",
-               "speed":20
+               "speed":5
             },
             {
                "type":"SpriteAnimationComponent",
@@ -112,27 +115,34 @@
       },
       {
          "type":"Actor",
-         "tag":"Ground",
+         "prototype":true,
+         "name":"Projectile",
+         "tag":"Player",
          "transform":{
-            "position":[
-               400,
-               585
-            ],
-            "rotation":0
+            "scale":[
+               0.1,
+               0.2
+            ]
          },
          "components":[
             {
+               "type":"ProjectileComponent",
+               "speed":20
+            },
+            {
                "type":"SpriteComponent",
-               "textureName":"ground.png"
+               "textureName":"Textures/boolet.png"
             },
             {
                "type":"RBPhysicsComponent",
-               "data.isDynamic":false,
+               "data.isDynamic":true,
+               "data.isSensor":true,
                "data.density":1,
-               "data.lockAngle":true,
+               "data.gravityScale":0,
+               "data.lockAngle":false,
                "data.size":[
-                  800,
-                  20
+                  369,
+                  136
                ]
             }
          ]
@@ -146,10 +156,6 @@
             "position":[
                700,
                500
-            ],
-            "scale":[
-               2,
-               2
             ],
             "rotation":0
          },
@@ -169,7 +175,6 @@
                "data.isDynamic":true,
                "data.isSensor":false,
                "data.density":1,
-               "data.restitution":0.5,
                "data.gravityScale":2,
                "data.lockAngle":true,
                "data.size":[
@@ -180,26 +185,63 @@
          ]
       },
       {
-         "type":"Actor",
-         "name":"Score",
-         "transform":{
-            "position":[
-               60,
-               20
-            ]
+        "type":"Actor",
+        "name":"tile01",
+        "tag":"Ground",
+        "prototype":true,
+        "transform":{
+            "scale":[
+               2,
+               2
+            ],
+            "rotation":0
          },
          "components":[
             {
-               "type":"TextComponent",
-               "fontName":"fonts/Axel Gilby Comic Sans.ttf",
-               "fontSize":16,
-               "color":[
-                  1,
-                  1,
-                  1
-               ],
-               "text":"Hello World!"
-            }
+                "type":"SpriteComponent",
+                "textureName":"tileset2_32x32.png",
+                "rect":[416, 128, 32, 32]
+            },
+            {
+               "type":"RBPhysicsComponent",
+               "data.isDynamic":false,
+               "data.density":1,
+               "data.lockAngle":true,
+               "data.size":[
+                  32,
+                  32
+               ]
+            }         
+         ]
+      },
+      {
+        "type":"Actor",
+        "name":"tile02",
+        "tag":"Ground",
+        "prototype":true,
+        "transform":{
+            "scale":[
+               2,
+               2
+            ],
+            "rotation":0
+         },
+         "components":[
+            {
+                "type":"SpriteComponent",
+                "textureName":"tileset2_32x32.png",
+                "rect":[32, 0, 32, 32]
+            },
+            {
+               "type":"RBPhysicsComponent",
+               "data.isDynamic":false,
+               "data.density":1,
+               "data.lockAngle":true,
+               "data.size":[
+                  32,
+                  32
+               ]
+            }         
          ]
       }
    ]

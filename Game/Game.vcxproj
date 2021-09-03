@@ -151,6 +151,7 @@
     <ClCompile Include="GameComponent\EnemyComponent.cpp" />
     <ClCompile Include="GameComponent\PickupComponent.cpp" />
     <ClCompile Include="GameComponent\PlayerComponent.cpp" />
+    <ClCompile Include="GameComponent\ProjectileComponent.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="GameComponent\EnemyComponent.h" />
     <ClInclude Include="GameComponent\PickupComponent.h" />
     <ClInclude Include="GameComponent\PlayerComponent.h" />
+    <ClInclude Include="GameComponent\ProjectileComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

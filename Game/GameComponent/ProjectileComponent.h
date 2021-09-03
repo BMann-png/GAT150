@@ -1,13 +1,14 @@
 #pragma once
 #include "Component/Component.h"
 #include "Framework/EventSystem.h"
+#include "Math/Vector2.h"
 
-class EnemyComponent : public pbls::Component
+class ProjectileComponent : public pbls::Component
 {
 public:
-	std::unique_ptr<Object> Clone() const { return std::make_unique<EnemyComponent>(*this); }
+	std::unique_ptr<Object> Clone() const { return std::make_unique<ProjectileComponent>(*this); }
 
-	~EnemyComponent();
+	virtual ~ProjectileComponent();
 
 	void Create() override;
 	virtual void Update() override;
@@ -19,5 +20,7 @@ public:
 
 public:
 	float speed{ 0 };
+	float lifeTime{ 0 };
+	pbls::Vector2 direction = pbls::Vector2::zero;
 
 };

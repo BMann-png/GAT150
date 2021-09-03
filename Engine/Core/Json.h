@@ -1,6 +1,8 @@
 #pragma once
 #include "document.h"
+#include <SDL_image.h>
 #include <string>
+#include <vector>
 
 #define JSON_READ(value, data) pbls::json::Get(value, #data, data)
 
@@ -20,5 +22,9 @@ namespace pbls
 		bool Get(const rapidjson::Value& value, const std::string& name, std::string& data);
 		bool Get(const rapidjson::Value& value, const std::string& name, Vector2& data);
 		bool Get(const rapidjson::Value& value, const std::string& name, Color& data);
+		bool Get(const rapidjson::Value& value, const std::string& name, SDL_Rect& data);
+
+		bool Get(const rapidjson::Value& value, const std::string& name, std::vector<std::string>& data);
+		bool Get(const rapidjson::Value& value, const std::string& name, std::vector<int>& data);
 	}
 }

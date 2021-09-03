@@ -47,7 +47,7 @@ namespace pbls
 		int numKeys;
 
 		Vector2 mousePosition;
-		std::array<Uint8, 3> mouseButtonState;
-		std::array<Uint8, 3> prevMouseButtonState;
+		std::array<Uint32, 3> mouseButtonState;
+		std::array<Uint32, 3> prevMouseButtonState;
 	};
 }

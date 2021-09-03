@@ -1,4 +1,5 @@
 #include "PlayerComponent.h"
+#include "ProjectileComponent.h"
 #include "Engine.h"
 
 using namespace pbls;
@@ -31,7 +32,7 @@ void PlayerComponent::Update()
 	}
 	if (contacts.size() > 0 && owner->scene->engine->Get<InputSystem>()->GetKeyState(SDL_SCANCODE_SPACE) == InputSystem::eKeyState::Pressed)
 	{
-		force.y -= 2000;
+		force.y -= jump;
 	}
 
 	PhysicsComponent* physicsComponent = owner->GetComponent<PhysicsComponent>();
@@ -44,6 +45,27 @@ void PlayerComponent::Update()
 	if (physicsComponent->velocity.x > 0) spriteAnimationComponent->StartSequence("walk_right");
 	else if (physicsComponent->velocity.x < 0) spriteAnimationComponent->StartSequence("walk_left");
 	else spriteAnimationComponent->StartSequence("idle");
+
+	//fire
+	fireTimer -= owner->scene->engine->time.deltaTime;
+	if (fireTimer <= 0 && owner->scene->engine->Get<InputSystem>()->GetButtonState(0) == InputSystem::eKeyState::Pressed)
+	{
+		fireTimer = fireRate;
+
+		auto Projectile = pbls::ObjectFactory::Instance().Create<pbls::Actor>("Projectile");
+		Projectile->transform.position = owner->transform.position;
+		Vector2 direction = owner->scene->engine->Get<InputSystem>()->GetMousePosition() - owner->transform.position;
+		Projectile->transform.rotation = RadToDeg(direction.Angle());
+		Projectile->GetComponent<ProjectileComponent>()->direction = direction.Normalized();
+		owner->scene->AddActor(std::move(Projectile));
+
+		std::cout << "FIRE!" << std::endl;
+	}
+	healthTimer -= owner->scene->engine->time.deltaTime;
+	if (health <= 0)
+	{
+		owner->destroy = true;
+	}
 }
 
 void PlayerComponent::OnCollisionEnter(const pbls::Event& event)
@@ -56,7 +78,11 @@ void PlayerComponent::OnCollisionEnter(const pbls::Event& event)
 		contacts.push_back(actor);
 	}
 
-	if (istring_compare(actor->tag, "enemy")) owner->scene->engine->Get<AudioSystem>()->PlayAudio("hurt");
+	if (istring_compare(actor->tag, "enemy"))
+	{
+		owner->scene->engine->Get<AudioSystem>()->PlayAudio("hurt");
+		if(healthTimer <= 0) health--;
+	}
 
 	std::cout << actor->tag << std::endl;
 }
@@ -80,6 +106,9 @@ bool PlayerComponent::Write(const rapidjson::Value& value) const
 bool PlayerComponent::Read(const rapidjson::Value& value)
 {
 	JSON_READ(value, speed);
+	JSON_READ(value, jump);
+	JSON_READ(value, fireRate);
+	JSON_READ(value, health);
 
 	return true;
 }

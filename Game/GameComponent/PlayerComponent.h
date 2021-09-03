@@ -21,6 +21,14 @@ public:
 
 public:
 	float speed{ 0 };
+	float jump{ 0 };
+	float fireRate{ 0 };
+	float fireTimer{ 0 };
+
+	float healthTimer{ 3 };
+
+	int health{ 1 };
+
 
 private:
 	std::list<pbls::Actor*> contacts;

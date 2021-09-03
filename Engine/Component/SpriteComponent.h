@@ -1,5 +1,6 @@
 #pragma once
 #include "GraphicsComponent.h"
+#include <SDL_image.h>
 #include <memory>
 
 namespace pbls
@@ -19,6 +20,8 @@ namespace pbls
 
 	public:
 		std::shared_ptr<Texture> texture{ nullptr };
+
+		SDL_Rect rect;
 
 	};
 }

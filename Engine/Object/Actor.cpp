@@ -24,6 +24,8 @@ namespace pbls
 
 	void Actor::Update(float dt)
 	{
+		if (!Active) return;
+
 		std::for_each(components.begin(), components.end(), [](auto& component) { component->Update(); });
 
 		transform.Update();
@@ -31,6 +33,8 @@ namespace pbls
 	}
 	void Actor::Draw(Renderer* renderer)
 	{
+		if (!Active) return;
+
 		std::for_each(components.begin(), components.end(), [renderer](auto& component) 
 			{ 
 				if (dynamic_cast<GraphicsComponent*>(component.get()))

@@ -3,6 +3,11 @@
 
 namespace pbls
 {
+	RBPhysicsComponent::RBPhysicsComponent(const RBPhysicsComponent& other)
+	{
+		data = other.data;
+		body = nullptr;
+	}
 	RBPhysicsComponent::~RBPhysicsComponent()
 	{
 		if (body)
